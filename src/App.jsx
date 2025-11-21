@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Analytics } from '@vercel/analytics/react';
 import { Shield, TrendingUp, DollarSign, Users, Clock, CheckCircle, AlertTriangle, BarChart3, Calculator, FileText, Send, Lightbulb, Newspaper, LogIn, Mail, X, Menu } from 'lucide-react';
 
 const BimaApp = () => {
@@ -488,7 +489,8 @@ const BimaApp = () => {
     </div>
   );
 
-  return (
+ return (
+  <>
     <div className="min-h-screen bg-gray-50">
       {showLogin && <LoginModal />}
       
@@ -588,7 +590,9 @@ const BimaApp = () => {
         </div>
       </nav>
     </div>
-  );
+    <Analytics />
+  </>
+);
 };
 
 export default BimaApp;
