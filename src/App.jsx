@@ -16,7 +16,7 @@ const BimaApp = () => {
       id: 1,
       date: 'Nov 15, 2024',
       title: 'Introducing Bima - Your Freelance Safety Net',
-      content: 'After losing $12,000 to a client who disappeared, I knew something had to change. Today, we\'re building the insurance platform freelancers deserve. Welcome to Bima.'
+      content: 'After losing $120,000 to a client who disappeared, I knew something had to change. Today, we\'re building the insurance platform freelancers deserve. Welcome to Bima.'
     },
     {
       id: 2,
