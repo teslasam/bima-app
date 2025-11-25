@@ -3,7 +3,7 @@ import { Shield, Clock, CheckCircle, FileText, Send, Lightbulb, Newspaper, LogIn
 
 // 🔥 REPLACE THESE WITH YOUR ACTUAL VALUES FROM SUPABASE
 const SUPABASE_URL = 'https://wsxnoitgeotpvnrcyyeg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzeG5vaXRnZW90cHZucmN5eWVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMzEyNTMsImV4cCI6MjA3OTYwNzI1M30.hbItDRVoSaQL_OxofbPDHQT1zRLynSufpRzuFTMKLig  ';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzeG5vaXRnZW90cHZucmN5eWVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMzEyNTMsImV4cCI6MjA3OTYwNzI1M30.hbItDRVoSaQL_OxofbPDHQT1zRLynSufpRzuFTMKLig ';
 
 const BimaApp = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -18,7 +18,15 @@ const BimaApp = () => {
 
   // Helper function to call Supabase REST API
   const supabaseQuery = async (table, method = 'GET', body = null, params = '') => {
+    if (SUPABASE_URL === 'YOUR_SUPABASE_URL_HERE' || SUPABASE_ANON_KEY === 'YOUR_SUPABASE_ANON_KEY_HERE') {
+      throw new Error('Please update SUPABASE_URL and SUPABASE_ANON_KEY in the code');
+    }
+
     const url = `${SUPABASE_URL}/rest/v1/${table}${params}`;
+    console.log('Making request to:', url);
+    console.log('Method:', method);
+    console.log('Body:', body);
+
     const options = {
       method,
       headers: {
@@ -34,10 +42,17 @@ const BimaApp = () => {
     }
 
     const response = await fetch(url, options);
+    console.log('Response status:', response.status);
+    
     if (!response.ok) {
-      throw new Error(`Supabase error: ${response.status}`);
+      const errorText = await response.text();
+      console.error('Error response:', errorText);
+      throw new Error(`Supabase error ${response.status}: ${errorText}`);
     }
-    return await response.json();
+    
+    const result = await response.json();
+    console.log('Response data:', result);
+    return result;
   };
 
   useEffect(() => {
@@ -58,32 +73,40 @@ const BimaApp = () => {
   const handleLogin = async () => {
     if (loginEmail && loginEmail.includes('@')) {
       try {
-        // Check if user exists
-        const existingUsers = await supabaseQuery('users', 'GET', null, `?email=eq.${loginEmail}&select=*`);
+        console.log('Attempting login for:', loginEmail);
+        
+        // Check if user exists - Fix: use proper URL encoding
+        const encodedEmail = encodeURIComponent(loginEmail);
+        const existingUsers = await supabaseQuery('users', 'GET', null, `?email=eq."${encodedEmail}"&select=*`);
+        console.log('Existing users:', existingUsers);
 
         if (existingUsers && existingUsers.length > 0) {
           // Update last_active
+          console.log('Updating existing user...');
           await supabaseQuery('users', 'PATCH', {
             last_active: new Date().toISOString()
-          }, `?email=eq.${loginEmail}`);
+          }, `?email=eq."${encodedEmail}"`);
         } else {
-          // Create new user
-          await supabaseQuery('users', 'POST', {
+          // Create new user - simpler approach
+          console.log('Creating new user...');
+          const newUser = await supabaseQuery('users', 'POST', [{
             email: loginEmail,
             last_active: new Date().toISOString(),
             total_projects: 0,
             total_claims: 0
-          });
+          }]);
+          console.log('User created:', newUser);
         }
 
+        console.log('Login successful!');
         setIsLoggedIn(true);
         setUserEmail(loginEmail);
         setShowLogin(false);
         setLoginEmail('');
         setActiveTab('assessment');
       } catch (error) {
-        console.error('Login error:', error);
-        alert('Something went wrong. Please try again.');
+        console.error('Login error details:', error);
+        alert('Error: ' + error.message + '\n\nCheck browser console for details.');
       }
     } else {
       alert('Please enter a valid email address');
@@ -99,12 +122,12 @@ const BimaApp = () => {
     setSendingIdea(true);
 
     try {
-      // Save to database
-      await supabaseQuery('ideas', 'POST', {
+      // Save to database - Fix: wrap in array
+      await supabaseQuery('ideas', 'POST', [{
         user_email: userEmail || 'Anonymous',
         idea: forwardComment,
         status: 'pending'
-      });
+      }]);
 
       // Send email via Formspree
       const response = await fetch('https://formspree.io/f/xnnqbbwa', {
@@ -137,10 +160,10 @@ const BimaApp = () => {
   const handleSubscribe = async () => {
     if (subscribeEmail && subscribeEmail.includes('@')) {
       try {
-        await supabaseQuery('subscribers', 'POST', {
+        await supabaseQuery('subscribers', 'POST', [{
           email: subscribeEmail,
           is_active: true
-        });
+        }]);
 
         alert('You are in. Updates coming soon.');
         setSubscribeEmail('');
