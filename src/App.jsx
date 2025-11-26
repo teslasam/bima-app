@@ -493,7 +493,7 @@ const BimaApp = () => {
                   <div>✓ Bad client prevention guide</div>
                   <div>✓ 30-min onboarding call with Sam</div>
                 </div>
-              </div>
+             </div>
 
               
                 href="https://forms.gle/qfApmZJEWteQhvYE7"
