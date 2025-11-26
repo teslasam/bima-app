@@ -60,14 +60,15 @@ const BimaApp = () => {
   }, []);
 
   const checkDatabaseConnection = async () => {
-  try {
-    await supabaseQuery('users', 'GET', null, '?select=count');
-    setDbStatus('connected');
-  } catch (error) {
-    console.log('Database connection failed:', error);
-    setDbStatus('disconnected');
-  }
-};
+    try {
+      await supabaseQuery('users', 'GET', null, '?select=count');
+      setDbStatus('connected');
+      console.log('Database connected successfully!');
+    } catch (err) {
+      console.error('Connection failed:', err);
+      setDbStatus('error');
+    }
+  };
 
   const handleLogin = async () => {
     if (loginEmail && loginEmail.includes('@')) {
@@ -363,110 +364,25 @@ const BimaApp = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-green-500 from-opacity-20 to-emerald-500 to-opacity-20 border border-green-500 border-opacity-30 rounded-2xl p-8 backdrop-blur-sm">
-              <div className="text-center mb-8">
-                <div className="inline-block bg-green-500 text-white px-4 py-2 rounded-full text-sm font-bold mb-4">
-                  LAUNCHING THIS MONTH
-                </div>
-                <h2 className="text-3xl font-bold text-white mb-3">
-                  Freelancer Protection Starter Kit
-                </h2>
-                <p className="text-blue-200 text-lg mb-6">
-                  Everything you need to protect yourself before full insurance launches
-                </p>
-              </div>
-
-              <div className="grid md:grid-cols-2 gap-4 mb-8">
-                <div className="bg-white bg-opacity-5 rounded-xl p-4 border border-green-500 border-opacity-20">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-white font-semibold">Anti-Scam Contract Template</div>
-                      <div className="text-blue-300 text-sm">Legal protection from day one</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white bg-opacity-5 rounded-xl p-4 border border-green-500 border-opacity-20">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-white font-semibold">Payment Milestone Structure</div>
-                      <div className="text-blue-300 text-sm">Never work for free again</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white bg-opacity-5 rounded-xl p-4 border border-green-500 border-opacity-20">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-white font-semibold">AI Bima Agent (WhatsApp)</div>
-                      <div className="text-blue-300 text-sm">Automated follow-ups & reminders</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white bg-opacity-5 rounded-xl p-4 border border-green-500 border-opacity-20">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-white font-semibold">Invoice Enforcement System</div>
-                      <div className="text-blue-300 text-sm">Get paid on time, every time</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white bg-opacity-5 rounded-xl p-4 border border-green-500 border-opacity-20">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-white font-semibold">Bad Client Prevention Guide</div>
-                      <div className="text-blue-300 text-sm">Spot red flags before signing</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white bg-opacity-5 rounded-xl p-4 border border-green-500 border-opacity-20">
-                  <div className="flex items-start gap-3">
-                    <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={20} />
-                    <div>
-                      <div className="text-white font-semibold">30-Min Onboarding Call</div>
-                      <div className="text-blue-300 text-sm">Personal setup with Sam</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-yellow-500 bg-opacity-10 border border-yellow-500 border-opacity-30 rounded-xl p-4 mb-6">
-                <div className="flex items-start gap-3">
-                  <Zap className="text-yellow-400 flex-shrink-0 mt-1" size={20} />
-                  <div className="text-yellow-200 text-sm">
-                    <span className="font-semibold">Bonus:</span> Early access to full insurance when it launches + locked-in early adopter premium rate
-                  </div>
-                </div>
-              </div>
-
-              <div className="text-center">
-                <button 
-                  onClick={() => setShowLogin(true)}
-                  className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-green-700 hover:to-emerald-700 inline-flex items-center gap-2"
-                >
-                  Get Your Starter Kit
-                  <ArrowRight size={20} />
-                </button>
-                <p className="text-blue-300 text-sm mt-3">
-                  5 minutes to qualify · Delivered within 48 hours
-                </p>
-              </div>
+            <div className="text-center space-y-6 py-12 bg-gradient-to-br from-blue-600 from-opacity-20 to-cyan-600 to-opacity-20 border border-blue-500 border-opacity-30 rounded-2xl backdrop-blur-sm">
+              <h2 className="text-3xl font-bold text-white">Ready to see your premium?</h2>
+              <p className="text-blue-200 text-lg">5 minutes. No commitment. Just see how it works.</p>
+              <button 
+                onClick={() => setShowLogin(true)}
+                className="bg-gradient-to-r from-blue-600 to-cyan-600 text-white px-8 py-4 rounded-xl font-bold text-lg hover:from-blue-700 hover:to-cyan-700 inline-flex items-center gap-2"
+              >
+                Get Started
+                <ArrowRight size={20} />
+              </button>
             </div>
-{activeTab === 'assessment' && (
+          </div>
+        )}
+
+        {activeTab === 'assessment' && (
           <div className="space-y-6 pb-20 max-w-3xl mx-auto">
             <div className="bg-gradient-to-br from-purple-500 from-opacity-20 to-pink-500 to-opacity-20 border border-purple-500 border-opacity-30 rounded-2xl p-8 backdrop-blur-sm">
-              <h2 className="text-3xl font-bold text-white mb-4">Get Your Starter Kit</h2>
-              <p className="text-blue-200 text-lg">
-                Everything you need to protect yourself this month, delivered in 48 hours
-              </p>
+              <h2 className="text-3xl font-bold text-white mb-4">Your Assessment</h2>
+              <p className="text-blue-200 text-lg">5 minutes to calculate your personalized premium</p>
             </div>
 
             <div className="bg-white bg-opacity-5 backdrop-blur-sm border border-white border-opacity-10 rounded-2xl p-8">
@@ -474,43 +390,26 @@ const BimaApp = () => {
                 <div className="bg-gradient-to-br from-blue-500 to-cyan-500 w-20 h-20 rounded-2xl flex items-center justify-center mx-auto mb-6">
                   <FileText className="text-white" size={36} />
                 </div>
-                <h3 className="text-2xl font-bold text-white mb-3">Get Your Starter Kit</h3>
-                <p className="text-blue-200">
-                  Answer 5 minutes of questions, get your protection toolkit
-                </p>
+                <h3 className="text-2xl font-bold text-white mb-3">Calculate Your Premium</h3>
+                <p className="text-blue-200">Answer questions about your work, we create your protection plan</p>
               </div>
 
-              <div className="bg-green-500 bg-opacity-10 border border-green-500 border-opacity-30 rounded-xl p-6 mb-6">
-                <div className="text-white font-semibold mb-3 flex items-center gap-2">
-                  <CheckCircle className="text-green-400" size={20} />
-                  You'll receive this month:
-                </div>
-                <div className="grid gap-2 text-sm text-blue-200">
-                  <div>✓ Anti-scam contract template</div>
-                  <div>✓ Payment milestone structure</div>
-                  <div>✓ AI Bima agent (WhatsApp)</div>
-                  <div>✓ Invoice enforcement sequence</div>
-                  <div>✓ Bad client prevention guide</div>
-                  <div>✓ 30-min onboarding call with Sam</div>
-                </div>
-             </div>
-
-              
+              <a
                 href="https://forms.gle/qfApmZJEWteQhvYE7"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white py-4 rounded-xl font-bold text-center hover:from-green-700 hover:to-emerald-700 mb-6 text-lg"
+                className="block w-full bg-gradient-to-r from-blue-600 to-cyan-600 text-white py-4 rounded-xl font-bold text-center hover:from-blue-700 hover:to-cyan-700 mb-6 text-lg"
               >
                 Start Assessment →
               </a>
 
               <div className="bg-yellow-500 bg-opacity-10 border border-yellow-500 border-opacity-30 rounded-xl p-6">
-                <p className="text-yellow-200 font-semibold mb-3">We'll ask about:</p>
+                <p className="text-yellow-200 font-semibold mb-3">We will ask about:</p>
                 <ul className="text-blue-200 space-y-2 text-sm">
-                  <li>• Your freelance experience & typical projects</li>
-                  <li>• Current protection gaps you're facing</li>
-                  <li>• Payment issues you've encountered</li>
-                  <li>• What you need most right now</li>
+                  <li>• Your freelance experience</li>
+                  <li>• Average project value</li>
+                  <li>• Client ratings</li>
+                  <li>• Your biggest fears about payment</li>
                 </ul>
               </div>
             </div>
@@ -520,20 +419,15 @@ const BimaApp = () => {
                 <CheckCircle className="text-green-400 flex-shrink-0 mt-1" size={24} />
                 <div>
                   <p className="text-white font-semibold mb-2">After you submit:</p>
-                  <p className="text-blue-200 text-sm mb-3">
-                    We'll email you at <strong className="text-white">{userEmail}</strong> within 48 hours with:
+                  <p className="text-blue-200 text-sm">
+                    We will email you at <strong className="text-white">{userEmail}</strong> with your personalized premium and next steps.
                   </p>
-                  <div className="text-blue-200 text-sm space-y-1 ml-4">
-                    <div>• Your complete starter kit (contracts, templates, guides)</div>
-                    <div>• WhatsApp AI agent setup link</div>
-                    <div>• Calendar link to book your 30-min onboarding call</div>
-                    <div>• Early access pricing for full insurance</div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         )}
+
         {activeTab === 'forward' && (
           <div className="space-y-6 pb-20 max-w-3xl mx-auto">
             <div className="bg-gradient-to-br from-yellow-500 from-opacity-20 to-orange-500 to-opacity-20 border border-yellow-500 border-opacity-30 rounded-2xl p-8 backdrop-blur-sm">
