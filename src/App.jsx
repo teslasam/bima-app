@@ -63,11 +63,7 @@ const BimaApp = () => {
     try {
       await supabaseQuery('users', 'GET', null, '?select=count');
       setDbStatus('connected');
-      console.log('Database connected successfully!');
-    } catch (err) {
-      console.error('Connection failed:', err);
-      setDbStatus('error');
-    }
+    } 
   };
 
   const handleLogin = async () => {
