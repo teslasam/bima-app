@@ -60,11 +60,14 @@ const BimaApp = () => {
   }, []);
 
   const checkDatabaseConnection = async () => {
-    try {
-      await supabaseQuery('users', 'GET', null, '?select=count');
-      setDbStatus('connected');
-    } 
-  };
+  try {
+    await supabaseQuery('users', 'GET', null, '?select=count');
+    setDbStatus('connected');
+  } catch (error) {
+    console.log('Database connection failed:', error);
+    setDbStatus('disconnected');
+  }
+};
 
   const handleLogin = async () => {
     if (loginEmail && loginEmail.includes('@')) {
