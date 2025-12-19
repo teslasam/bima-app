@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Shield, Clock, CheckCircle, FileText, Send, Lightbulb, Newspaper, LogIn, Mail, X, DollarSign, TrendingUp, Zap, ArrowRight } from 'lucide-react';
 
 // 🔥 REPLACE THESE WITH YOUR ACTUAL VALUES FROM SUPABASE
-const SUPABASE_URL = 'https://wsxnoitgeotpvnrcyyeg.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzeG5vaXRnZW90cHZucmN5eWVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMzEyNTMsImV4cCI6MjA3OTYwNzI1M30.hbItDRVoSaQL_OxofbPDHQT1zRLynSufpRzuFTMKLig';
+const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
+const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
 
 const BimaApp = () => {
   const [activeTab, setActiveTab] = useState('home');
@@ -180,17 +180,7 @@ const BimaApp = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
-      {dbStatus === 'error' && (
-        <div className="bg-red-500 text-white px-4 py-2 text-center text-sm font-semibold">
-          ⚠️ Database not connected. Update SUPABASE_URL and SUPABASE_ANON_KEY in the code.
-        </div>
-      )}
-
-      {dbStatus === 'connected' && (
-        <div className="bg-green-500 text-white px-4 py-2 text-center text-sm font-semibold">
-          ✓ Database connected successfully!
-        </div>
-      )}
+None
 
       {showLogin && (
         <div className="fixed inset-0 bg-black bg-opacity-70 flex items-center justify-center z-50 p-4 backdrop-blur-sm">
