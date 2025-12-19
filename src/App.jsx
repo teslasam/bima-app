@@ -3,7 +3,7 @@ import { Shield, Clock, CheckCircle, FileText, Send, Lightbulb, Newspaper, LogIn
 
 // 🔥 REPLACE THESE WITH YOUR ACTUAL VALUES FROM SUPABASE
 const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6IndzeG5vaXRnZW90cHZucmN5eWVnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQwMzEyNTMsImV4cCI6MjA3OTYwNzI1M30.hbItDRVoSaQL_OxofbPDHQT1zRLynSufpRzuFTMKLig';
 
 const BimaApp = () => {
   const [activeTab, setActiveTab] = useState('home');
